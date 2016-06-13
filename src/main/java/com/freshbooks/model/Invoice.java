@@ -28,6 +28,9 @@ public class Invoice implements Serializable {
     Double discount;
     String notes;
     String terms;
+
+    @XStreamAlias("return_uri")
+    String returnUri;
     
     @XStreamAlias("currency_code")
     String currencyCode;
@@ -55,7 +58,6 @@ public class Invoice implements Serializable {
     
     ArrayList<InvoiceLine> lines;
     
-    String url;
     @XStreamAlias("auth_url")
     String authUrl;
     @XStreamAlias("recurring_id")
@@ -63,10 +65,6 @@ public class Invoice implements Serializable {
     Double amount;
     @XStreamAlias("amount_outstanding")
     Double amountOutstanding;
-    
-    @XStreamAlias("paid")
-    Double amountPaid;
-    
     
     Links links;
     
@@ -178,11 +176,11 @@ public class Invoice implements Serializable {
     public void setLines(ArrayList<InvoiceLine> lines) {
         this.lines = lines;
     }
-    public String getUrl() {
-        return url;
+    public String getReturnUri() {
+        return returnUri;
     }
-    public void setUrl(String url) {
-        this.url = url;
+    public void setReturnUri(String returnUri) {
+        this.returnUri = returnUri;
     }
     public String getAuthUrl() {
         return authUrl;
@@ -213,12 +211,6 @@ public class Invoice implements Serializable {
     }
     public void setAmountOutstanding(Double amountOutstanding) {
         this.amountOutstanding = amountOutstanding;
-    }
-    public Double getAmountPaid() {
-        return amountPaid;
-    }
-    public void setAmountPaid(Double paid) {
-        this.amountPaid = paid;
     }
     public Links getLinks() {
         return links;
@@ -252,11 +244,6 @@ public class Invoice implements Serializable {
             if (other.amountOutstanding != null)
                 return false;
         } else if (!amountOutstanding.equals(other.amountOutstanding))
-            return false;
-        if (amountPaid == null) {
-            if (other.amountPaid != null)
-                return false;
-        } else if (!amountPaid.equals(other.amountPaid))
             return false;
         if (authUrl == null) {
             if (other.authUrl != null)
@@ -379,10 +366,10 @@ public class Invoice implements Serializable {
                 return false;
         } else if (!currencyCode.equals(other.currencyCode))
             return false;
-        if (url == null) {
-            if (other.url != null)
+        if (returnUri == null) {
+            if (other.returnUri != null)
                 return false;
-        } else if (!url.equals(other.url))
+        } else if (!returnUri.equals(other.returnUri))
             return false;
         return true;
     }
