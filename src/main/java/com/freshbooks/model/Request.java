@@ -42,6 +42,9 @@ public class Request extends Message {
             break;
         case INVOICE_DELETE:
         case INVOICE_GET:
+        case INVOICE_GET_PDF:
+        case INVOICE_SEND_BY_EMAIL:
+        case INVOICE_SEND_BY_SNAIL_MAIL:
             this.invoiceId = id;
             break;
         case PAYMENT_DELETE:

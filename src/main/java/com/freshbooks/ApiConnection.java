@@ -84,6 +84,9 @@ public class ApiConnection {
         }
     }
 
+    protected Response performRequest(Request request) throws ApiException, IOException {
+    	return performRequest(request,false);
+    }
     /**
      * Send a request to the FreshBooks API and return the response object.
      * @param url
@@ -92,7 +95,7 @@ public class ApiConnection {
      * @throws IOException 
      * @throws Error
      */
-    protected Response performRequest(Request request) throws ApiException, IOException {
+    protected Response performRequest(Request request, boolean responseIsByteArray) throws ApiException, IOException {
         try {
             XStream xs = new CustomXStream();
             
@@ -119,15 +122,20 @@ public class ApiConnection {
                         new String(bytes, method.getResponseCharSet()));
                     is = new ByteArrayInputStream(bytes);
                 }
-                try {
-                    Response response = (Response)xs.fromXML(is);
-                    // TODO Throw an error if we got one
-                    if(response.isFail()) {
-                        throw new ApiException(response.getError());
-                    }
-                    return response;
-                } catch(CannotResolveClassException cnrce) {
-                    throw new ApiException("Error while parsing response from FreshBooks: "+cnrce.toString()+"; response body: "+is);
+                if (responseIsByteArray) {
+                	Response response = new Response(IOUtils.toByteArray(is));
+                	return response;
+                } else {
+	                try {
+	                    Response response = (Response)xs.fromXML(is);
+	                    // TODO Throw an error if we got one
+	                    if(response.isFail()) {
+	                        throw new ApiException(response.getError());
+	                    }
+	                    return response;
+	                } catch(CannotResolveClassException cnrce) {
+	                    throw new ApiException("Error while parsing response from FreshBooks: "+cnrce.toString()+"; response body: "+is);
+	                }
                 }
             } finally {
                 method.releaseConnection();
@@ -705,9 +713,7 @@ public class ApiConnection {
 	}
 	
 	public byte[] getInvoicePDF(Long id) throws ApiException, IOException {
-        Invoice inv = performRequest(new Request(RequestMethod.INVOICE_GET, id)).getInvoice();
-        String clientViewUrl = inv.getLinks().getClientView();
-        byte[] pdfBytes = PDFGrabber.getPDF(id, clientViewUrl);
+		byte[] pdfBytes = performRequest(new Request(RequestMethod.INVOICE_GET_PDF, id), true).getData();
         return pdfBytes;
     }
 }

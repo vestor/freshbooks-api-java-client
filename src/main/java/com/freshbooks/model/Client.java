@@ -58,6 +58,10 @@ public class Client implements Serializable {
     String secondaryCountry;
     @XStreamAlias("s_code")
     String secondaryCode;
+    @XStreamAlias("vat_name")
+    String vatName;
+    @XStreamAlias("vat_number")
+    String vatNumber;
     
     Links links;
     
@@ -200,6 +204,18 @@ public class Client implements Serializable {
     }
     public void setSecondaryCode(String secondaryCode) {
         this.secondaryCode = secondaryCode;
+    }
+    public String getVatName() {
+    	return vatName;
+    }
+    public void setVatName(String vatName) {
+    	this.vatName = vatName;
+    }
+    public String getVatNumber() {
+    	return vatNumber;
+    }
+    public void setVatNumber(String vatNumber) {
+    	this.vatNumber = vatNumber;
     }
     public Long getId() {
         return id;

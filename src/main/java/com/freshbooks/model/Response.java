@@ -40,6 +40,10 @@ public class Response extends Message {
     	status = ResponseStatus.ok;
     	setCallbacks(callbacks);
     }
+    public Response(byte[] bytes) {
+    	this.data = bytes;
+    }
+    
     public ResponseStatus getStatus() {
         return status;
     }

@@ -1,0 +1,6 @@
+.target/
+.settings/
+build/
+.idea/
+freshbooksApiClient.iml
+/.classpath

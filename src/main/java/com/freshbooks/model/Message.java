@@ -50,6 +50,8 @@ public class Message {
     @XStreamAlias("project_id")
     protected Long projectId;
     
+    protected byte[] data; 
+    
     public Message() {
         super();
     }
@@ -261,4 +263,13 @@ public class Message {
 	public void setRecurrings(Recurrings recurrings) {
 		this.recurrings = recurrings;
 	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+	
 }

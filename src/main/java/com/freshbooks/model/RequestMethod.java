@@ -13,6 +13,7 @@ public enum RequestMethod {
     INVOICE_GET("invoice.get"),
     INVOICE_DELETE("invoice.delete"),
     INVOICE_LIST("invoice.list"),
+    INVOICE_GET_PDF("invoice.getPDF"),
     INVOICE_SEND_BY_EMAIL("invoice.sendByEmail"),
     INVOICE_SEND_BY_SNAIL_MAIL("invoice.sendBySnailMail"),
     
